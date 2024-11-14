@@ -38,10 +38,29 @@ def parse_labels(labels_file):
         for line in file:
             parts = line.strip().split()
             frame = int(parts[0])
+            track_id = int(parts[1])
+            object_type = parts[2]
+            truncated = int(parts[3])
+            occluded = int(parts[4])
+            alpha = float(parts[5])
             bbox = list(map(float, parts[6:10]))  # Extract bbox coordinates
+            dimensions = list(map(float, parts[10:13]))  # Extract dimensions (height, width, length)
+            location = list(map(float, parts[13:16]))  # Extract location (x, y, z)
+            rotation_y = float(parts[16])
+            
             if frame not in labels:
                 labels[frame] = []
-            labels[frame].append(bbox)
+            labels[frame].append({
+                'track_id': track_id,
+                'object_type': object_type,
+                'truncated': truncated,
+                'occluded': occluded,
+                'alpha': alpha,
+                'bbox': bbox,
+                'dimensions': dimensions,
+                'location': location,
+                'rotation_y': rotation_y
+            })
     return labels
 
 # Load labels
@@ -56,7 +75,8 @@ for i in range(num_images):
     
     # Draw bounding boxes from labels
     if i in labels:
-        for bbox in labels[i]:
+        for label in labels[i]:
+            bbox = label['bbox']
             left, top, right, bottom = map(int, bbox)
             cv2.rectangle(left_img, (left, top), (right, bottom), (255, 0, 0), 2)
             
@@ -80,7 +100,7 @@ for i in range(num_images):
             print(f"3D Coordinates: {points_3D[0:3].flatten()}")
 
     # Display images
-    cv2.imshow('Left Image', left_img)
+    cv2.imshow('Right Image', right_img)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
