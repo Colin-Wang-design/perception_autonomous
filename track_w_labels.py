@@ -17,8 +17,12 @@ R = np.array([[0.99947832, 0.02166116, -0.02395787], # Rotation matrix from left
 T = np.array([-0.53552388,  0.00666445, -0.01007482])  # Translation vector from left to right camera
 
 # Specify the path to the images
-left_image_path = '/Users/maxbrazhnyy/GitHub/34759_pfas/Project/34759_final_project_rect/seq_01/image_02/data/*.png'
-right_image_path = '/Users/maxbrazhnyy/GitHub/34759_pfas/Project/34759_final_project_rect/seq_01/image_03/data/*.png'
+left_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_02/image_02/data/*.png'
+right_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_01/image_03/data/*.png'
+
+# sequn02
+# left_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_02/image_02/data/*.png'
+# right_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_02/image_03/data/*.png'
 
 # Read all images with the specified naming convention
 left_images = sorted(glob.glob(left_image_path))
@@ -26,6 +30,8 @@ right_images = sorted(glob.glob(right_image_path))
 
 # Ensure the number of images in both directories is the same
 num_images = min(len(left_images), len(right_images))
+if not num_images:
+    print("Can not open images")
 
 # Define the projection matrices for the left and right cameras
 P_left = np.dot(K_left, np.hstack((np.eye(3), np.zeros((3, 1)))))  # Left camera at the origin
@@ -44,8 +50,8 @@ def parse_labels(labels_file):
             labels[frame].append(bbox)
     return labels
 
-# Load labels
-labels_file = '/Users/maxbrazhnyy/GitHub/34759_pfas/Project/34759_final_project_rect/seq_01/labels.txt'  # Fill in the path to the labels file
+# Load labels, Fill in the path to the labels file
+labels_file = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_02/labels.txt'
 labels = parse_labels(labels_file)
 
 # Load rectified images in a loop
@@ -77,7 +83,7 @@ for i in range(num_images):
             points_3D = points_4D[:3] / points_4D[3]  # Convert from homogeneous to 3D
 
             # Draw the 3D coordinates
-            print(f"3D Coordinates: {points_3D[0:3].flatten()}")
+            # print(f"3D Coordinates: {points_3D[0:3].flatten()}")
 
     # Display images
     cv2.imshow('Left Image', left_img)
