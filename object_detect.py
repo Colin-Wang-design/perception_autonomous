@@ -2,89 +2,83 @@ import cv2
 import numpy as np
 import glob
 import os
+import torch
+import torchvision
+from torchvision.models.detection import fasterrcnn_resnet50_fpn
+from torchvision.transforms import functional as F
+from PIL import Image
+import PIL.ImageDraw as ImageDraw
 
-# Camera parameters (intrinsics and extrinsics)
-# Replace with actual calibration data. [fx, 0, cx], [0, fy, cy], [0, 0, 1]
-K_left = np.array([[9.569475e+02, 0.000000e+00, 6.939767e+02], 
-                   [0.000000e+00, 9.522352e+02, 2.386081e+02], 
-                   [0.000000e+00, 0.000000e+00, 1.000000e+00]])
-K_right = np.array([[9.011007e+02, 0.000000e+00, 6.982947e+02], 
-                    [0.000000e+00, 8.970639e+02, 2.377447e+02], 
-                    [0.000000e+00, 0.000000e+00, 1.000000e+00]])
-dist_coeff_left = np.zeros((5, 1))  # Rectifyied no distortion; 
-dist_coeff_right = np.zeros((5, 1))
-R = np.array([[0.99947832, 0.02166116, -0.02395787], # Rotation matrix from left to right camera
-              [-0.02162283, 0.99976448, 0.00185789],
-              [0.02399247, -0.00133888, 0.99971125]])  
-T = np.array([-0.53552388,  0.00666445, -0.01007482])  # Translation vector from left to right camera
+# Check if CUDA is available and set the device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
 
-# Specify the path to the images, copy the path of images there
-# left_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_01/image_02/data/*.png'
-# right_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_01/image_03/data/*.png'
-# left_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_02/image_02/data/*.png'
-# right_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_02/image_03/data/*.png'
-left_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_03/image_02/data/*.png'
-right_image_path = '/Users/wangdepei/Documents/perception_autonomous/final_project/34759_final_project_rect/seq_03/image_03/data/*.png'
+# Specify the path to the images
+data_path = "/dtu/blackhole/1b/203515/perception/data"
+
+# Define paths for left and right images
+#left_image_path = 'rect/seq_01/image_02/data/*.png'
+#right_image_path = 'rect/seq_01/image_03/data/*.png'
+# left_image_path = 'rect/seq_02/image_02/data/*.png'
+# right_image_path = 'rect/seq_02/image_03/data/*.png'
+left_image_path = 'rect/seq_03/image_02/data/*.png'
+right_image_path = 'rect/seq_03/image_03/data/*.png'
+
+left_image_path = os.path.join(data_path, left_image_path)
+right_image_path = os.path.join(data_path, right_image_path)
+
 # Read all images with the specified naming convention
 left_images = sorted(glob.glob(left_image_path))
 right_images = sorted(glob.glob(right_image_path))
 
 # Ensure the number of images in both directories is the same
 num_images = min(len(left_images), len(right_images))
-# print(num_images)
-# Initialize the background subtractor
-bg_subtractor = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=25, detectShadows=True)
 
-# Define the projection matrices for the left and right cameras
-P_left = np.dot(K_left, np.hstack((np.eye(3), np.zeros((3, 1)))))  # Left camera at the origin
-P_right = np.dot(K_right, np.hstack((R, T.reshape(3, 1))))  # Right camera with R and T
+# Load the pre-trained Faster R-CNN model and move it to the GPU
+model = fasterrcnn_resnet50_fpn(weights="DEFAULT")  # Updated to match torchvision 0.13+
+model = model.to(device)
+model.eval()  # Set the model to evaluation mode
 
-# Load rectified images in a loop
+# Output directory for saving results
+output_dir = 'output/images/seq3/'
+output_dir = os.path.join(data_path, output_dir)
+os.makedirs(output_dir, exist_ok=True)
+
+# Iterate over all images
 for i in range(num_images):
-    # Load the stereo pair (rectified images)
-    left_img = cv2.imread(left_images[i], cv2.IMREAD_GRAYSCALE)
-    right_img = cv2.imread(right_images[i], cv2.IMREAD_GRAYSCALE)
-    
-    # Detect moving object in the left image using background subtraction
-    mask = bg_subtractor.apply(left_img)
-    _, mask = cv2.threshold(mask, 254, 255, cv2.THRESH_BINARY)  # Threshold to remove shadows
-    
-    # Find contours of the detected objects
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
-    for contour in contours:
-        # Filter small contours based on area
-        if cv2.contourArea(contour) < 500:
-            continue
-        
-        # Compute bounding box for the detected object
-        x, y, w, h = cv2.boundingRect(contour)
-        cv2.rectangle(left_img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        
-        # Center point in the left image
-        point_left = (x + w // 2, y + h // 2)
+    # Load and process the image
+    image = Image.open(left_images[i]).convert("RGB")  # Ensure the image is in RGB format
+    image_tensor = F.to_tensor(image).to(device)  # Convert the PIL image to a tensor and move to GPU
 
-        # Corresponding point in the right image (block matching)
-        disparity = cv2.matchTemplate(right_img, left_img[y:y+h, x:x+w], cv2.TM_SQDIFF)
-        min_val, _, min_loc, _ = cv2.minMaxLoc(disparity)
-        point_right = (min_loc[0] + w // 2, y + h // 2)
-            
-        # Prepare points for triangulation (must be in homogeneous coordinates)
-        pts_left = np.array([[point_left[0]], [point_left[1]]], dtype=np.float32)
-        pts_right = np.array([[point_right[0]], [point_right[1]]], dtype=np.float32)
+    # Make predictions
+    with torch.no_grad():
+        predictions = model([image_tensor])
 
-        # Triangulate points to get 3D coordinates
-        points_4D = cv2.triangulatePoints(P_left, P_right, pts_left, pts_right)
-        points_3D = points_4D[:3] / points_4D[3]  # Convert from homogeneous to 3D
+    # Convert predictions back to CPU for further processing
+    predictions = [{k: v.cpu() for k, v in t.items()} for t in predictions]
 
-        # Draw the 3D coordinates
-        print(f"3D Coordinates: {points_3D[0:3].flatten()}")
+    # Create a drawing context on the image
+    draw = ImageDraw.Draw(image)
 
-    # Display images
-    cv2.imshow('Left Image', left_img)
-    cv2.imshow('Mask', mask)
-    
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    # Iterate over the predictions and draw bounding boxes
+    for idx, box in enumerate(predictions[0]['boxes']):
+        score = predictions[0]['scores'][idx]
+        label = predictions[0]['labels'][idx]
 
-cv2.destroyAllWindows()
+        if score > 0.9:  # Confidence threshold
+            # Convert the box coordinates from tensor to integer
+            xmin, ymin, xmax, ymax = box.int().tolist()
+
+            # Draw the bounding box
+            draw.rectangle([xmin, ymin, xmax, ymax], outline="red", width=3)
+
+            # Optionally, add label and score to the bounding box
+            label_text = f"Label {label}, {score:.2f}"
+            draw.text((xmin, ymin), label_text, fill="red")
+
+            print(f"Prediction {idx}: Label {label}, Score {score:.2f}")
+
+    # Save the image with bounding boxes
+    output_path = os.path.join(output_dir, f"{i}.png")
+    image.save(output_path)
+    print(f"Saved image {i} with predictions to {output_path}")
