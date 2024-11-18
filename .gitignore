@@ -1,0 +1,6 @@
+# data/ouptut directories
+data/
+output/
+
+# Virtual environment
+venv/
