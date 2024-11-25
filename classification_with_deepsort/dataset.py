@@ -1,19 +1,19 @@
-import json
 from PIL import Image
 from torch.utils.data import Dataset
 import os
 import torch
 import logging
+import json
 
 # Category mapping (only cars, pedestrians, and cyclists)
 CATEGORY_TO_LABEL = {
-    "other_person": 1,
     "pedestrian": 1, 
+    "other_person": 1,
     "cyclist": 2,
-    "bycicle": 2,
     "rider": 2,
-    "other_vehicle": 3,
+    "bycicle": 2,
     "car": 3,
+    "other_vehicle": 3
 }
 LABEL_TO_CATEGORY = {v: k for k, v in CATEGORY_TO_LABEL.items()}
 
@@ -39,8 +39,9 @@ class CustomValidationDataset(Dataset):
             for line in file:
                 parts = line.strip().split()
                 image_id = parts[0]
-                bbox = list(map(float, parts[1:5]))
-                label = CATEGORY_TO_LABEL.get(parts[5], 0)
+                bbox = list(map(float, parts[5:9]))  # Adjust indices to match your format
+                class_name = parts[9].lower()  # Adjust index to match your format
+                label = CATEGORY_TO_LABEL.get(class_name, 0)
                 if image_id not in annotations:
                     annotations[image_id] = []
                 annotations[image_id].append({'bbox': bbox, 'label': label})

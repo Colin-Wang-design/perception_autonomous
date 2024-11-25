@@ -20,4 +20,4 @@
 #BSUB -e output/OUTPUT_FILE%J.err
 
 source "/zhome/15/3/203515/perception_autonomous/venv/bin/activate"
-python "main.py"
+python "main.py" --mode train

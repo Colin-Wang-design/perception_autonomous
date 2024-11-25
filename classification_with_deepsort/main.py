@@ -83,11 +83,11 @@ if args.mode == 'train':
     val_dataset = ConcatDataset([val_dataset_seq1, val_dataset_seq2])
 
     # Initialize the datasets
-    train_dataset = BDD100KDataset(train_images_dir, train_annotations_file, transforms=train_transforms, limit=1000)
+    train_dataset = BDD100KDataset(train_images_dir, train_annotations_file, transforms=train_transforms, limit=10000)
 
     # Create data loaders
-    train_loader = DataLoader(train_dataset, batch_size=2, shuffle=True, collate_fn=collate_fn)
-    val_loader = DataLoader(val_dataset, batch_size=2, shuffle=False, collate_fn=collate_fn)
+    train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, collate_fn=collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, collate_fn=collate_fn)
 
     # Load pre-trained Faster R-CNN model
     model = fasterrcnn_resnet50_fpn(weights="DEFAULT")
