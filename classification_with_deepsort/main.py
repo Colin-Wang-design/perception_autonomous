@@ -78,16 +78,14 @@ if args.mode == 'train':
         transforms=val_transforms,  # Use validation transforms
         filename_format="{:010d}.png"  # Ten digits
     )
-
-    # Combine the datasets
     val_dataset = ConcatDataset([val_dataset_seq1, val_dataset_seq2])
 
     # Initialize the datasets
-    train_dataset = BDD100KDataset(train_images_dir, train_annotations_file, transforms=train_transforms, limit=10000)
+    train_dataset = BDD100KDataset(train_images_dir, train_annotations_file, transforms=train_transforms, limit=50000)
 
     # Create data loaders
-    train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, collate_fn=collate_fn)
-    val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, collate_fn=collate_fn)
+    train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, collate_fn=collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False, collate_fn=collate_fn)
 
     # Load pre-trained Faster R-CNN model
     model = fasterrcnn_resnet50_fpn(weights="DEFAULT")
@@ -104,7 +102,7 @@ if args.mode == 'train':
     num_epochs = 20
     trained_model = train_and_validate(train_loader, val_loader, model, optimizer, num_epochs, output_dir, mean, std)
 
-    print("Training and validation complete!")
+    logging.info("Training and validation complete!")
 
 elif args.mode == 'test':
     if not args.model_path:

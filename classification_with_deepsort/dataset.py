@@ -1,24 +1,54 @@
-from PIL import Image
-from torch.utils.data import Dataset
 import os
-import torch
 import logging
+from PIL import Image
+import torch
+from torch.utils.data import Dataset
 import json
 
-# Category mapping (only cars, pedestrians, and cyclists)
 CATEGORY_TO_LABEL = {
-    "pedestrian": 1, 
     "other_person": 1,
+    "pedestrian": 1, 
     "cyclist": 2,
-    "rider": 2,
     "bycicle": 2,
+    "rider": 2,
+    "other_vehicle": 3,
     "car": 3,
-    "other_vehicle": 3
 }
 LABEL_TO_CATEGORY = {v: k for k, v in CATEGORY_TO_LABEL.items()}
 
+def parse_labels(labels_file):
+    labels = {}
+    with open(labels_file, 'r') as file:
+        for line in file:
+            parts = line.strip().split()
+            frame = int(parts[0])
+            track_id = int(parts[1])
+            object_type = parts[2]
+            truncated = int(parts[3])
+            occluded = int(parts[4])
+            alpha = float(parts[5])
+            bbox = list(map(float, parts[6:10]))  # Extract bbox coordinates
+            dimensions = list(map(float, parts[10:13]))  # Extract dimensions (height, width, length)
+            location = list(map(float, parts[13:16]))  # Extract location (x, y, z)
+            rotation_y = float(parts[16])
+            
+            if frame not in labels:
+                labels[frame] = []
+            labels[frame].append({
+                'track_id': track_id,
+                'object_type': object_type,
+                'truncated': truncated,
+                'occluded': occluded,
+                'alpha': alpha,
+                'bbox': bbox,
+                'dimensions': dimensions,
+                'location': location,
+                'rotation_y': rotation_y
+            })
+    return labels
+
 class CustomValidationDataset(Dataset):
-    def __init__(self, images_dir, labels_file=None, transforms=None, filename_format="{:06d}.png"):
+    def __init__(self, images_dir, labels_file=None, transforms=None, filename_format="{:010d}.png"):
         self.images_dir = images_dir
         self.labels_file = labels_file
         self.transforms = transforms
@@ -34,17 +64,24 @@ class CustomValidationDataset(Dataset):
         return self.parse_labels(labels_file)
 
     def parse_labels(self, labels_file):
+        raw_annotations = parse_labels(labels_file)
         annotations = {}
-        with open(labels_file, 'r') as file:
-            for line in file:
-                parts = line.strip().split()
-                image_id = parts[0]
-                bbox = list(map(float, parts[5:9]))  # Adjust indices to match your format
-                class_name = parts[9].lower()  # Adjust index to match your format
-                label = CATEGORY_TO_LABEL.get(class_name, 0)
-                if image_id not in annotations:
-                    annotations[image_id] = []
-                annotations[image_id].append({'bbox': bbox, 'label': label})
+        total_objects = 0
+        for frame, objects in raw_annotations.items():
+            image_id = self.filename_format.format(frame)
+            annotations[image_id] = []
+            for obj in objects:
+                bbox = obj['bbox']
+                object_type = obj['object_type'].lower()
+                if object_type in CATEGORY_TO_LABEL:
+                    label = CATEGORY_TO_LABEL[object_type]
+                    annotations[image_id].append({'bbox': bbox, 'label': label})
+                    total_objects += 1
+                else:
+                    logging.warning(f"Unknown object type: {object_type}")
+        
+        logging.info(f"Parsed {len(annotations)} images with {total_objects} total objects")
+        logging.info(f"Sample image_ids: {list(annotations.keys())[:5]}")
         return annotations
 
     def __len__(self):
@@ -59,17 +96,20 @@ class CustomValidationDataset(Dataset):
             image = self.transforms(image)
         
         if self.annotations:
-            image_id = os.path.splitext(image_file)[0]
-            targets = self.annotations.get(image_id, [])
-            boxes = [target['bbox'] for target in targets]
-            labels = [target['label'] for target in targets]
-            target = {
-                'boxes': torch.tensor(boxes, dtype=torch.float32),
-                'labels': torch.tensor(labels, dtype=torch.int64)
-            }
-            return image, target
-        else:
-            return image
+            # Use the image_file directly since it matches how we stored it
+            if image_file in self.annotations:
+                targets = self.annotations[image_file]
+                boxes = [target['bbox'] for target in targets]
+                labels = [target['label'] for target in targets]
+                target = {
+                    'boxes': torch.tensor(boxes, dtype=torch.float32),
+                    'labels': torch.tensor(labels, dtype=torch.int64)
+                }
+                logging.info(f"Found {len(boxes)} boxes for image {image_file}")
+                return image, target
+            else:
+                logging.warning(f"No annotations found for image {image_file}")
+                return image, {'boxes': torch.tensor([]), 'labels': torch.tensor([])}
 
 class BDD100KDataset(Dataset):
     def __init__(self, images_dir, annotations_file, transforms=None, limit=None):
@@ -140,5 +180,5 @@ class BDD100KDataset(Dataset):
         if self.transforms:
             image = self.transforms(image)
 
-        # logging.info(f"Successfully processed image and annotations for index {idx}.")
+        logging.info(f"Successfully processed image and annotations for index {idx}.")
         return image, target
