@@ -169,19 +169,15 @@ def draw_detections(img, detections, predictions, trackers, lost_trackers):
 
 def main():
     # sequence_path = '/Users/maxbrazhnyy/GitHub/34759_pfas/Project/34759_final_project_raw/seq_02'
-    sequence_path = '/Users/maxbrazhnyy/Downloads/movie'
-    # left_images = sorted(glob.glob(f'{sequence_path}/image_02/data/*.png'))
-    left_images = sorted(glob.glob('/Users/maxbrazhnyy/Downloads/movie/image_02/data/*.jpg'))
-    right_images = sorted(glob.glob('/Users/maxbrazhnyy/Downloads/movie/image_02/data/*.jpg'))
+    sequence_path = '/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01'
+    left_images = sorted(glob.glob(f'{sequence_path}/image_02/data/*.png'))
+    right_images = sorted(glob.glob(f'{sequence_path}/image_03/data/*.png'))
     print('Found', len(left_images), 'images')
-
-
-    #right_images = sorted(glob.glob(f'{sequence_path}/image_03/data/*.png'))
     
     # Initialize trackers dictionary
     trackers = {}
     lost_trackers = {}
-    max_lost_frames = 30
+    max_lost_frames = 10
     
     fig, ax = setup_3d_plot()
     
@@ -196,8 +192,8 @@ def main():
                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
         
         # Run YOLOv8 detection
-        left_results = model.track(left_img, classes=[0,2,3], persist=True)[0]
-        right_results = model.track(right_img, classes=[0,2,3], persist=True)[0]
+        left_results = model.track(left_img, classes=[0,2,3],conf=0.3, persist=True)[0]
+        right_results = model.track(right_img, classes=[0,2,3],conf=0.3, persist=True)[0]
         
         points_3d = []
         track_ids = []
