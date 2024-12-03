@@ -6,13 +6,13 @@ from torch.utils.data import Dataset
 import json
 
 CATEGORY_TO_LABEL = {
-    "other_person": 1,
     "pedestrian": 1, 
+    "other_person": 1,
     "cyclist": 2,
     "bycicle": 2,
     "rider": 2,
-    "other_vehicle": 3,
     "car": 3,
+    "other_vehicle": 3,
 }
 LABEL_TO_CATEGORY = {v: k for k, v in CATEGORY_TO_LABEL.items()}
 
@@ -110,6 +110,35 @@ class CustomValidationDataset(Dataset):
             else:
                 logging.warning(f"No annotations found for image {image_file}")
                 return image, {'boxes': torch.tensor([]), 'labels': torch.tensor([])}
+        else:
+            return image
+
+class CustomTestDataset(Dataset):
+    def __init__(self, images_dir, transforms=None, filename_format="{:010d}.png"):
+        self.images_dir = images_dir
+        self.transforms = transforms
+        self.filename_format = filename_format
+        self.image_files = sorted(os.listdir(images_dir))
+
+    def __len__(self):
+        return len(self.image_files)
+
+    def __getitem__(self, idx):
+        image_file = self.image_files[idx]
+        image_path = os.path.join(self.images_dir, image_file)
+        try:
+            image = Image.open(image_path).convert("RGB")
+        except FileNotFoundError:
+            logging.error(f"Image not found at path: {image_path}")
+            return None
+        except Exception as e:
+            logging.error(f"Error loading image {image_path}: {e}")
+            return None
+        
+        if self.transforms:
+            image = self.transforms(image)
+        
+        return image
 
 class BDD100KDataset(Dataset):
     def __init__(self, images_dir, annotations_file, transforms=None, limit=None):

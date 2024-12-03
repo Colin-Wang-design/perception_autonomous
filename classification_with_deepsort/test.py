@@ -4,7 +4,7 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from utils import draw_bounding_boxes, collate_fn, CATEGORY_TO_LABEL, LABEL_TO_CATEGORY, denormalize
-from dataset import CustomValidationDataset
+from dataset import CustomTestDataset, CustomValidationDataset
 from torch.utils.data import DataLoader
 from torchvision import transforms
 import os
@@ -93,7 +93,7 @@ def run_inference_and_tracking(model, dataloader, deepsort, device, output_dir, 
                 cv2.imwrite(output_path, frame)
 
                 # Draw bounding boxes using the utility function
-                draw_bounding_boxes(images[i].cpu(), output, None, idx, output_dir, mean, std, epoch=0)
+                draw_bounding_boxes(images[i].cpu(), output, None, idx, output_dir, mean, std, epoch=0, phase="test")
             
             # Clear cache after each batch
             torch.cuda.empty_cache()
@@ -118,9 +118,8 @@ def test_model(model_path, test_images_dir, output_dir, mean, std, num_classes):
     ])
 
     # Initialize the test dataset
-    test_dataset = CustomValidationDataset(
+    test_dataset = CustomTestDataset(
         test_images_dir,
-        labels_file=None,  # No labels for the test set
         transforms=test_transforms,
         filename_format="{:06d}.png"  # Adjust if necessary
     )

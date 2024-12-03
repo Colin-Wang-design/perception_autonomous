@@ -12,13 +12,13 @@ import pandas as pd
 
 # Category mapping (only cars, pedestrians, and cyclists)
 CATEGORY_TO_LABEL = {
-    "pedestrian": 1, 
     "other_person": 1,
+    "pedestrian": 1, 
     "cyclist": 2,
     "rider": 2,
     "bycicle": 2,
-    "car": 3,
     "other_vehicle": 3,
+    "car": 3,
 }
 LABEL_TO_CATEGORY = {v: k for k, v in CATEGORY_TO_LABEL.items()}
 
