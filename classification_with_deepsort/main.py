@@ -9,7 +9,7 @@ from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from dataset import CustomValidationDataset, BDD100KDataset
 from utils import collate_fn, CATEGORY_TO_LABEL
 from train import train_and_validate
-from test import test_model
+from test2 import test_model
 from torchvision import transforms
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import argparse
@@ -33,7 +33,8 @@ args = parser.parse_args()
 
 # Generate a timestamp for the output directory
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-output_dir = f'/dtu/blackhole/1b/203515/perception/data/output/{timestamp}'
+#output_dir = f'/dtu/blackhole/1b/203515/perception/data/output/{timestamp}'
+output_dir = '/Users/maxbrazhnyy/Downloads/diogo_model_output/{timestamp}'
 os.makedirs(output_dir, exist_ok=True)
 
 # Define transformations for training and validation
@@ -109,7 +110,7 @@ elif args.mode == 'test':
         raise ValueError("Please provide the path to the trained model using --model-path")
 
     # Paths to your test dataset
-    test_images_dir = "/dtu/blackhole/1b/203515/perception/data/rect/seq_03/image_02/data"
-
+    # test_images_dir = "/dtu/blackhole/1b/203515/perception/data/rect/seq_03/image_02/data"
+    test_images_dir = "/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_03/data"
     # Run the test routine
     test_model(args.model_path, test_images_dir, output_dir, mean, std, args.num_classes)

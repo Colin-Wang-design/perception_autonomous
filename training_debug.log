@@ -1,0 +1,214 @@
+2024-12-03 19:38:48,969 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 19:38:48,969 - INFO - - gpu enabled: False
+2024-12-03 19:38:48,969 - INFO - - half precision: False
+2024-12-03 19:38:48,969 - INFO - - max batch size: 16
+2024-12-03 19:38:48,970 - INFO - - expects BGR: True
+2024-12-03 19:38:49,142 - INFO - DeepSort Tracker initialised
+2024-12-03 19:38:49,142 - INFO - - max age: 30
+2024-12-03 19:38:49,142 - INFO - - appearance threshold: 0.2
+2024-12-03 19:38:49,142 - INFO - - nms threshold: OFF
+2024-12-03 19:38:49,142 - INFO - - max num of appearance features: None
+2024-12-03 19:38:49,143 - INFO - - overriding track class : No
+2024-12-03 19:38:49,143 - INFO - - today given : No
+2024-12-03 19:38:49,143 - INFO - - in-build embedder : Yes
+2024-12-03 19:38:49,143 - INFO - - polygon detections : No
+2024-12-03 19:39:37,563 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/000021.png: [Errno 60] Operation timed out
+2024-12-03 19:43:18,461 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 19:43:18,462 - INFO - - gpu enabled: False
+2024-12-03 19:43:18,462 - INFO - - half precision: False
+2024-12-03 19:43:18,462 - INFO - - max batch size: 16
+2024-12-03 19:43:18,462 - INFO - - expects BGR: True
+2024-12-03 19:43:18,545 - INFO - DeepSort Tracker initialised
+2024-12-03 19:43:18,545 - INFO - - max age: 30
+2024-12-03 19:43:18,545 - INFO - - appearance threshold: 0.2
+2024-12-03 19:43:18,545 - INFO - - nms threshold: OFF
+2024-12-03 19:43:18,545 - INFO - - max num of appearance features: None
+2024-12-03 19:43:18,545 - INFO - - overriding track class : No
+2024-12-03 19:43:18,545 - INFO - - today given : No
+2024-12-03 19:43:18,545 - INFO - - in-build embedder : Yes
+2024-12-03 19:43:18,545 - INFO - - polygon detections : No
+2024-12-03 19:44:06,034 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/000021.png: [Errno 60] Operation timed out
+2024-12-03 19:44:19,914 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 19:44:19,914 - INFO - - gpu enabled: False
+2024-12-03 19:44:19,914 - INFO - - half precision: False
+2024-12-03 19:44:19,914 - INFO - - max batch size: 16
+2024-12-03 19:44:19,914 - INFO - - expects BGR: True
+2024-12-03 19:44:20,012 - INFO - DeepSort Tracker initialised
+2024-12-03 19:44:20,012 - INFO - - max age: 30
+2024-12-03 19:44:20,012 - INFO - - appearance threshold: 0.2
+2024-12-03 19:44:20,012 - INFO - - nms threshold: OFF
+2024-12-03 19:44:20,012 - INFO - - max num of appearance features: None
+2024-12-03 19:44:20,012 - INFO - - overriding track class : No
+2024-12-03 19:44:20,012 - INFO - - today given : No
+2024-12-03 19:44:20,012 - INFO - - in-build embedder : Yes
+2024-12-03 19:44:20,012 - INFO - - polygon detections : No
+2024-12-03 19:45:10,178 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/000021.png: [Errno 60] Operation timed out
+2024-12-03 19:45:10,179 - ERROR - No valid images in batch 21
+2024-12-03 19:45:10,217 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/000022.png: [Errno 60] Operation timed out
+2024-12-03 19:45:10,218 - ERROR - No valid images in batch 22
+2024-12-03 19:45:12,607 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/000024.png: [Errno 60] Operation timed out
+2024-12-03 19:45:12,608 - ERROR - No valid images in batch 24
+2024-12-03 19:45:20,233 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/000028.png: [Errno 60] Operation timed out
+2024-12-03 19:45:20,234 - ERROR - No valid images in batch 28
+2024-12-03 19:45:20,273 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/000029.png: [Errno 60] Operation timed out
+2024-12-03 19:45:20,274 - ERROR - No valid images in batch 29
+2024-12-03 20:14:39,598 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:14:39,599 - INFO - - gpu enabled: False
+2024-12-03 20:14:39,599 - INFO - - half precision: False
+2024-12-03 20:14:39,599 - INFO - - max batch size: 16
+2024-12-03 20:14:39,599 - INFO - - expects BGR: True
+2024-12-03 20:14:39,756 - INFO - DeepSort Tracker initialised
+2024-12-03 20:14:39,756 - INFO - - max age: 30
+2024-12-03 20:14:39,756 - INFO - - appearance threshold: 0.2
+2024-12-03 20:14:39,756 - INFO - - nms threshold: OFF
+2024-12-03 20:14:39,756 - INFO - - max num of appearance features: None
+2024-12-03 20:14:39,756 - INFO - - overriding track class : No
+2024-12-03 20:14:39,756 - INFO - - today given : No
+2024-12-03 20:14:39,756 - INFO - - in-build embedder : Yes
+2024-12-03 20:14:39,756 - INFO - - polygon detections : No
+2024-12-03 20:18:24,886 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:18:24,887 - INFO - - gpu enabled: False
+2024-12-03 20:18:24,887 - INFO - - half precision: False
+2024-12-03 20:18:24,887 - INFO - - max batch size: 16
+2024-12-03 20:18:24,887 - INFO - - expects BGR: True
+2024-12-03 20:18:25,073 - INFO - DeepSort Tracker initialised
+2024-12-03 20:18:25,073 - INFO - - max age: 30
+2024-12-03 20:18:25,073 - INFO - - appearance threshold: 0.2
+2024-12-03 20:18:25,074 - INFO - - nms threshold: OFF
+2024-12-03 20:18:25,074 - INFO - - max num of appearance features: None
+2024-12-03 20:18:25,074 - INFO - - overriding track class : No
+2024-12-03 20:18:25,074 - INFO - - today given : No
+2024-12-03 20:18:25,074 - INFO - - in-build embedder : Yes
+2024-12-03 20:18:25,074 - INFO - - polygon detections : No
+2024-12-03 20:28:18,060 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:28:18,061 - INFO - - gpu enabled: False
+2024-12-03 20:28:18,061 - INFO - - half precision: False
+2024-12-03 20:28:18,061 - INFO - - max batch size: 16
+2024-12-03 20:28:18,061 - INFO - - expects BGR: True
+2024-12-03 20:28:18,252 - INFO - DeepSort Tracker initialised
+2024-12-03 20:28:18,253 - INFO - - max age: 30
+2024-12-03 20:28:18,253 - INFO - - appearance threshold: 0.2
+2024-12-03 20:28:18,253 - INFO - - nms threshold: OFF
+2024-12-03 20:28:18,253 - INFO - - max num of appearance features: None
+2024-12-03 20:28:18,253 - INFO - - overriding track class : No
+2024-12-03 20:28:18,253 - INFO - - today given : No
+2024-12-03 20:28:18,253 - INFO - - in-build embedder : Yes
+2024-12-03 20:28:18,253 - INFO - - polygon detections : No
+2024-12-03 20:28:18,344 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02 copy/data/.DS_Store: cannot identify image file '/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02 copy/data/.DS_Store'
+2024-12-03 20:31:09,906 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:31:09,907 - INFO - - gpu enabled: False
+2024-12-03 20:31:09,907 - INFO - - half precision: False
+2024-12-03 20:31:09,907 - INFO - - max batch size: 16
+2024-12-03 20:31:09,907 - INFO - - expects BGR: True
+2024-12-03 20:31:09,986 - INFO - DeepSort Tracker initialised
+2024-12-03 20:31:09,986 - INFO - - max age: 30
+2024-12-03 20:31:09,986 - INFO - - appearance threshold: 0.2
+2024-12-03 20:31:09,986 - INFO - - nms threshold: OFF
+2024-12-03 20:31:09,986 - INFO - - max num of appearance features: None
+2024-12-03 20:31:09,986 - INFO - - overriding track class : No
+2024-12-03 20:31:09,986 - INFO - - today given : No
+2024-12-03 20:31:09,986 - INFO - - in-build embedder : Yes
+2024-12-03 20:31:09,986 - INFO - - polygon detections : No
+2024-12-03 20:31:10,058 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02 copy/data/.DS_Store: cannot identify image file '/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02 copy/data/.DS_Store'
+2024-12-03 20:33:41,617 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:33:41,617 - INFO - - gpu enabled: False
+2024-12-03 20:33:41,617 - INFO - - half precision: False
+2024-12-03 20:33:41,617 - INFO - - max batch size: 16
+2024-12-03 20:33:41,617 - INFO - - expects BGR: True
+2024-12-03 20:33:41,692 - INFO - DeepSort Tracker initialised
+2024-12-03 20:33:41,692 - INFO - - max age: 30
+2024-12-03 20:33:41,692 - INFO - - appearance threshold: 0.2
+2024-12-03 20:33:41,692 - INFO - - nms threshold: OFF
+2024-12-03 20:33:41,692 - INFO - - max num of appearance features: None
+2024-12-03 20:33:41,692 - INFO - - overriding track class : No
+2024-12-03 20:33:41,692 - INFO - - today given : No
+2024-12-03 20:33:41,692 - INFO - - in-build embedder : Yes
+2024-12-03 20:33:41,692 - INFO - - polygon detections : No
+2024-12-03 20:33:41,753 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02_copy/data/.DS_Store: cannot identify image file '/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02_copy/data/.DS_Store'
+2024-12-03 20:36:09,339 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:36:09,340 - INFO - - gpu enabled: False
+2024-12-03 20:36:09,340 - INFO - - half precision: False
+2024-12-03 20:36:09,340 - INFO - - max batch size: 16
+2024-12-03 20:36:09,340 - INFO - - expects BGR: True
+2024-12-03 20:36:09,509 - INFO - DeepSort Tracker initialised
+2024-12-03 20:36:09,509 - INFO - - max age: 30
+2024-12-03 20:36:09,509 - INFO - - appearance threshold: 0.2
+2024-12-03 20:36:09,509 - INFO - - nms threshold: OFF
+2024-12-03 20:36:09,509 - INFO - - max num of appearance features: None
+2024-12-03 20:36:09,509 - INFO - - overriding track class : No
+2024-12-03 20:36:09,509 - INFO - - today given : No
+2024-12-03 20:36:09,509 - INFO - - in-build embedder : Yes
+2024-12-03 20:36:09,509 - INFO - - polygon detections : No
+2024-12-03 20:36:09,575 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02_copy/data/.DS_Store: cannot identify image file '/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02_copy/data/.DS_Store'
+2024-12-03 20:36:57,612 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:36:57,612 - INFO - - gpu enabled: False
+2024-12-03 20:36:57,612 - INFO - - half precision: False
+2024-12-03 20:36:57,612 - INFO - - max batch size: 16
+2024-12-03 20:36:57,612 - INFO - - expects BGR: True
+2024-12-03 20:36:57,686 - INFO - DeepSort Tracker initialised
+2024-12-03 20:36:57,686 - INFO - - max age: 30
+2024-12-03 20:36:57,686 - INFO - - appearance threshold: 0.2
+2024-12-03 20:36:57,686 - INFO - - nms threshold: OFF
+2024-12-03 20:36:57,686 - INFO - - max num of appearance features: None
+2024-12-03 20:36:57,686 - INFO - - overriding track class : No
+2024-12-03 20:36:57,686 - INFO - - today given : No
+2024-12-03 20:36:57,686 - INFO - - in-build embedder : Yes
+2024-12-03 20:36:57,686 - INFO - - polygon detections : No
+2024-12-03 20:37:52,775 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:37:52,775 - INFO - - gpu enabled: False
+2024-12-03 20:37:52,775 - INFO - - half precision: False
+2024-12-03 20:37:52,775 - INFO - - max batch size: 16
+2024-12-03 20:37:52,775 - INFO - - expects BGR: True
+2024-12-03 20:37:52,861 - INFO - DeepSort Tracker initialised
+2024-12-03 20:37:52,861 - INFO - - max age: 30
+2024-12-03 20:37:52,861 - INFO - - appearance threshold: 0.2
+2024-12-03 20:37:52,861 - INFO - - nms threshold: OFF
+2024-12-03 20:37:52,862 - INFO - - max num of appearance features: None
+2024-12-03 20:37:52,862 - INFO - - overriding track class : No
+2024-12-03 20:37:52,862 - INFO - - today given : No
+2024-12-03 20:37:52,862 - INFO - - in-build embedder : Yes
+2024-12-03 20:37:52,862 - INFO - - polygon detections : No
+2024-12-03 20:37:52,924 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data2/.DS_Store: cannot identify image file '/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data2/.DS_Store'
+2024-12-03 20:38:41,533 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:38:41,533 - INFO - - gpu enabled: False
+2024-12-03 20:38:41,533 - INFO - - half precision: False
+2024-12-03 20:38:41,533 - INFO - - max batch size: 16
+2024-12-03 20:38:41,533 - INFO - - expects BGR: True
+2024-12-03 20:38:41,618 - INFO - DeepSort Tracker initialised
+2024-12-03 20:38:41,618 - INFO - - max age: 30
+2024-12-03 20:38:41,618 - INFO - - appearance threshold: 0.2
+2024-12-03 20:38:41,618 - INFO - - nms threshold: OFF
+2024-12-03 20:38:41,618 - INFO - - max num of appearance features: None
+2024-12-03 20:38:41,619 - INFO - - overriding track class : No
+2024-12-03 20:38:41,619 - INFO - - today given : No
+2024-12-03 20:38:41,619 - INFO - - in-build embedder : Yes
+2024-12-03 20:38:41,619 - INFO - - polygon detections : No
+2024-12-03 20:52:10,788 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:52:10,788 - INFO - - gpu enabled: False
+2024-12-03 20:52:10,788 - INFO - - half precision: False
+2024-12-03 20:52:10,788 - INFO - - max batch size: 16
+2024-12-03 20:52:10,788 - INFO - - expects BGR: True
+2024-12-03 20:52:10,961 - INFO - DeepSort Tracker initialised
+2024-12-03 20:52:10,962 - INFO - - max age: 30
+2024-12-03 20:52:10,962 - INFO - - appearance threshold: 0.2
+2024-12-03 20:52:10,962 - INFO - - nms threshold: OFF
+2024-12-03 20:52:10,962 - INFO - - max num of appearance features: None
+2024-12-03 20:52:10,962 - INFO - - overriding track class : No
+2024-12-03 20:52:10,962 - INFO - - today given : No
+2024-12-03 20:52:10,962 - INFO - - in-build embedder : Yes
+2024-12-03 20:52:10,962 - INFO - - polygon detections : No
+2024-12-03 20:52:11,029 - ERROR - Error loading image /Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/.DS_Store: cannot identify image file '/Users/maxbrazhnyy/Library/CloudStorage/OneDrive-DanmarksTekniskeUniversitet/Faculdade/DTU/Autonoums Systems/S3_Fall24/34759 Perception for Autonomous Systems/Project/34759_final_project_rect/seq_01/image_02/data/.DS_Store'
+2024-12-03 20:52:42,305 - INFO - MobileNetV2 Embedder for Deep Sort initialised
+2024-12-03 20:52:42,305 - INFO - - gpu enabled: False
+2024-12-03 20:52:42,305 - INFO - - half precision: False
+2024-12-03 20:52:42,305 - INFO - - max batch size: 16
+2024-12-03 20:52:42,305 - INFO - - expects BGR: True
+2024-12-03 20:52:42,380 - INFO - DeepSort Tracker initialised
+2024-12-03 20:52:42,381 - INFO - - max age: 30
+2024-12-03 20:52:42,381 - INFO - - appearance threshold: 0.2
+2024-12-03 20:52:42,381 - INFO - - nms threshold: OFF
+2024-12-03 20:52:42,381 - INFO - - max num of appearance features: None
+2024-12-03 20:52:42,381 - INFO - - overriding track class : No
+2024-12-03 20:52:42,381 - INFO - - today given : No
+2024-12-03 20:52:42,381 - INFO - - in-build embedder : Yes
+2024-12-03 20:52:42,381 - INFO - - polygon detections : No
