@@ -6,18 +6,55 @@ from mpl_toolkits.mplot3d import Axes3D
 import pytransform3d.transformations as pt
 import pytransform3d.camera as pc
 
+
+
 # Calibration data directly copied from calib_cam_to_cam.txt
-P_left = np.array([
-    [7.070493e+02, 0.000000e+00, 6.040814e+02, 0.000000e+00],
-    [0.000000e+00, 7.070493e+02, 1.805066e+02, 0.000000e+00],
-    [0.000000e+00, 0.000000e+00, 1.000000e+00, 0.000000e+00]
+K_left = np.array([
+    [9.569475e+02, 0.000000e+00, 6.939767e+02],
+    [0.000000e+00, 9.522352e+02, 2.386081e+02],
+    [0.000000e+00, 0.000000e+00, 1.000000e+00]
 ])
 
-P_right = np.array([
-    [7.070493e+02, 0.000000e+00, 6.040814e+02, -3.797842e+02],
-    [0.000000e+00, 7.070493e+02, 1.805066e+02, 0.000000e+00],
-    [0.000000e+00, 0.000000e+00, 1.000000e+00, 0.000000e+00]
+K_right = np.array([
+    [9.011007e+02, 0.000000e+00, 6.982947e+02],
+    [0.000000e+00, 8.970639e+02, 2.377447e+02],
+    [0.000000e+00, 0.000000e+00, 1.000000e+00]
 ])
+
+# Extract focal lengths for camera 2
+f_x_02 = K_left[0, 0]
+f_y_02 = K_left[1, 1]
+
+# Extract focal lengths for camera 3
+f_x_03 = K_right[0, 0]
+f_y_03 = K_right[1, 1]
+
+print(f"Focal length for camera 2 in x direction: {f_x_02}")
+print(f"Focal length for camera 2 in y direction: {f_y_02}")
+print(f"Focal length for camera 3 in x direction: {f_x_03}")
+print(f"Focal length for camera 3 in y direction: {f_y_03}")
+# Calculate the average focal lengths for each camera
+avg_focal_length_02 = (f_x_02 + f_y_02) / 2
+avg_focal_length_03 = (f_x_03 + f_y_03) / 2
+
+print(f"Average focal length for camera 2: {avg_focal_length_02}")
+print(f"Average focal length for camera 3: {avg_focal_length_03}")
+
+
+R = np.array([
+    [0.99947832, 0.02166116, -0.02395787],
+    [-0.02162283, 0.99976448, 0.00185789],
+    [0.02399247, -0.00133888, 0.99971125]
+])
+
+
+
+# Update translation vector T to reflect the 0.54 meters separation
+T = np.array([-0.54, 0, 0])
+
+# Define projection matrices with updated T
+P_left = np.dot(K_left, np.hstack((np.eye(3), np.zeros((3, 1)))))
+P_right = np.dot(K_right, np.hstack((R, T.reshape(3, 1))))
 
 # Sequence directory
 sequence_path = '/Users/maxbrazhnyy/GitHub/34759_pfas/Project/34759_final_project_rect/seq_01'
@@ -50,19 +87,23 @@ def parse_labels(labels_file):
 # Load labels
 labels = parse_labels(sequence_path + '/labels.txt')
 
-# Custom triangulation function
-def custom_triangulate(P_left, P_right, pts_left, pts_right):
-    A = np.zeros((4, 4))
-    A[0] = pts_left[0] * P_left[2] - P_left[0]
-    A[1] = pts_left[1] * P_left[2] - P_left[1]
-    A[2] = pts_right[0] * P_right[2] - P_right[0]
-    A[3] = pts_right[1] * P_right[2] - P_right[1]
+def my_triangulate(T, f_02, f_03, pts_02, pts_03):
+    # Calculate the disparity
+    disparity = pts_02[0] - pts_03[0]
+    f = (f_02 + f_03) / 2
+    print("f", f)
+    # Calculate the depth in meters
+    depth = abs(T[0]) * f / disparity
     
-    _, _, Vt = np.linalg.svd(A)
-    X = Vt[-1]
-    X = X[:3] / X[3]
+    # Calculate the 3D point
+    X = np.array([
+        depth * (pts_02[0] - K_left[0, 2]) / f_02,
+        depth * (pts_02[1] - K_left[1, 2]) / f_02,
+        depth
+    ])
+    
     return X
-
+    
 # Toggle to choose triangulation method
 use_custom_triangulation = True
 
@@ -96,7 +137,7 @@ def plot_cameras(ax):
                   color='blue')
     
     # Right camera
-    cam2world_right = pt.transform_from_pq([-0.53552388, 0.00666445, -0.01007482, 0, 0, 0, 1])
+    cam2world_right = pt.transform_from_pq([-0.54, 0, 0, 0, 0, 0, 1])
     pc.plot_camera(ax, cam2world=cam2world_right, M=intrinsic_matrix, 
                   sensor_size=sensor_size, 
                   virtual_image_distance=virtual_image_distance, 
@@ -133,7 +174,9 @@ for i in range(num_images):
         
         # Triangulate points to get 3D coordinates
         if use_custom_triangulation:
-            points_3D = custom_triangulate(P_left, P_right, pts_left, pts_right)
+            #points_3D = custom_triangulate(P_left, P_right, pts_left, pts_right)
+            points_3D = my_triangulate(T, avg_focal_length_02, avg_focal_length_03, pts_left, pts_right)
+            print("points_3D", points_3D)
         else:
             points_4D = cv2.triangulatePoints(P_left, P_right, pts_left[:2].reshape(2, 1), pts_right[:2].reshape(2, 1))
             points_3D = points_4D[:3] / points_4D[3]  # Convert from homogeneous to 3D
